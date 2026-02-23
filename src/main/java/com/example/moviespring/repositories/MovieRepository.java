@@ -18,7 +18,7 @@ public class MovieRepository {
                 .getResourceAsStream("data/imdb-data.csv");
 
         Scanner scanner = new Scanner(is);
-        //Skip the first line of the file
+        //Skip the first line of the data file
         scanner.nextLine();
         while (scanner.hasNextLine()) {
             allMovies.add(new Movie(scanner.nextLine()));
