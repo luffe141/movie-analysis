@@ -1,6 +1,8 @@
 package com.example.moviespring.services;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.example.moviespring.models.Movie;
 import com.example.moviespring.repositories.MovieRepository;
@@ -38,4 +40,19 @@ public class MovieService {
     }
     return count > 0 ? (double) totalYear / count : 0;
 }
+    public String getMostPopularGenre() {
+        if (allMovies.isEmpty()) return "No movies available";
+        Map<String, Integer> genrePopularity = new HashMap<>();
+        for (Movie m : allMovies) {
+            genrePopularity.put(m.getSubject(), genrePopularity.getOrDefault(m.getSubject(), 0) + m.getPopularity());
+        }
+        return genrePopularity.entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .orElse("No genres available");
+    }
+
+    public List<Movie> getAllMovies() {
+        return allMovies;
+    }
 }

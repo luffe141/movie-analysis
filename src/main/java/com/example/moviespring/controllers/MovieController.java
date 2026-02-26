@@ -9,6 +9,7 @@ import com.example.moviespring.services.MovieService;
 
 
 
+
 @Controller
 public class MovieController {
         @GetMapping("/examples/averageAwardAge")
@@ -55,5 +56,21 @@ public class MovieController {
         mav.addObject("averageAwardAge", avgAwardAge);
         return mav;
     }
+    @GetMapping("/mostPopularGenre")
+    public ModelAndView getMostPopularGenre(){
+        ModelAndView mav = new ModelAndView("examples/mostPopularGenre");
+        String mostPopularGenre = service.getMostPopularGenre();
+        int genreCount = 0;
+        // Find antal film i den mest populære genre
+        for (var m : service.getAllMovies()) {
+            if (m.getSubject().equals(mostPopularGenre)) {
+                genreCount++;
+            }
+        }
+        mav.addObject("mostPopularGenre", mostPopularGenre);
+        mav.addObject("genreCount", genreCount);
+        return mav;
+    }
+    
     
 }
