@@ -7,6 +7,7 @@ public class Movie {
     private String subject;
     private int popularity;
     public boolean awards;
+    private int awardsAge;
 
     public Movie(String unparsedMovie){
         String[] splitMovie = unparsedMovie.split(";");
@@ -18,9 +19,19 @@ public class Movie {
 
         if(splitMovie[5].equalsIgnoreCase("yes")) {
             this.awards = true;
-        }
-        else{
+        } else {
             this.awards = false;
+        }
+
+        // If awardsAge exists in CSV, parse it, otherwise set to 0
+        if (splitMovie.length > 6) {
+            try {
+                this.awardsAge = Integer.parseInt(splitMovie[6]);
+            } catch (Exception e) {
+                this.awardsAge = 0;
+            }
+        } else {
+            this.awardsAge = 0;
         }
     }
 
@@ -48,6 +59,10 @@ public class Movie {
         return awards;
     }
 
+    public int getAwardsAge() {
+        return awardsAge;
+    }
+
     @Override
     public String toString() {
         return "Movie{" +
@@ -59,4 +74,6 @@ public class Movie {
                 ", awards=" + awards +
                 '}';
     }
+
+    
 }
